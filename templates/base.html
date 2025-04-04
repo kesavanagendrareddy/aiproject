@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="AI-powered cover letter generator with personalized results">
+    <meta name="keywords" content="cover letter, job application, resume, AI generator">
+    <title>CoverGen - AI Cover Letter Generator</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="/static/styles.css">
+    <style>
+        .loading-spinner {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+            z-index: 9999;
+        }
+        .spinner {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+        /* Dark mode transitions */
+        body, nav, footer, main {
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+        #darkModeToggle {
+            transition: all 0.3s ease;
+        }
+        #darkModeToggle:hover {
+            transform: scale(1.1);
+        }
+        .input-field {
+            transition: background-color 0.3s ease, border-color 0.3s ease;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 min-h-screen flex flex-col">
+    <div id="loadingSpinner" class="loading-spinner">
+        <div class="spinner">
+            <i class="fas fa-spinner fa-spin text-6xl text-white"></i>
+        </div>
+    </div>
+    
+    <nav class="bg-white dark:bg-gray-800 shadow-lg">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <a href="/" class="flex-shrink-0 flex items-center">
+                        <i class="fas fa-file-alt text-blue-600 text-2xl mr-2"></i>
+                        <span class="font-bold text-xl text-gray-800 dark:text-white">CoverGen AI</span>
+                    </a>
+                    <button id="darkModeToggle" class="ml-4 p-2 rounded-full focus:outline-none">
+                        <i class="fas fa-moon text-gray-600 dark:text-yellow-300"></i>
+                    </button>
+                </div>
+                <div class="hidden md:ml-6 md:flex md:items-center md:space-x-8">
+                    <a href="/" class="text-gray-700 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium">Home</a>
+                    {% if 'user' in session %}
+                        <a href="/dashboard" class="text-gray-700 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium">Dashboard</a>
+                        <a href="/logout" class="text-gray-700 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium">Logout</a>
+                    {% else %}
+                        <a href="/signin" class="text-gray-700 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium">Sign In</a>
+                        <a href="/signup" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md text-sm font-medium">Sign Up</a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </nav>
+    
+    <main class="container mx-auto py-8 dark:text-gray-100">
+        {% block content %}{% endblock %}
+    </main>
+
+    <footer class="bg-white dark:bg-gray-800 shadow-lg mt-8">
+        <div class="max-w-6xl mx-auto px-4 py-6">
+            <p class="text-center text-gray-500">© 2023 CoverGen. All rights reserved.</p>
+        </div>
+    </footer>
+    
+    <script src="/static/script.js" type="module"></script>
+</body>
+</html>
